@@ -1,7 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+//data
+import users from './data/user_data.js'
+import games from './data/game_data.js'
+import reviews from './data/review_data.js'
+
+//components
+import Search from './Search.js'
+import Filter from './Filter.js'
+import NavBar from './NavBar.js'
+import GameList from './GameList.js'
+import {useState} from "react"
+
+
+
 
 function App() {
+
+  const[search, setSearch] = useState ("")
+  const[genre, setGenre] = useState("Fighting")
+
+  const gamesToDisplay = games.filter((game) => game.name.toLowerCase().includes(search.toLowerCase()))
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +38,10 @@ function App() {
           Learn React
         </a>
       </header>
+      <Search search={search} setSearch={setSearch} />
+      <NavBar />
+      <Filter games={games} genre={genre} setGenre={setGenre}/>
+      <GameList games={gamesToDisplay} reviews={reviews} />
     </div>
   );
 }
