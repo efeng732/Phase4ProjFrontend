@@ -59,6 +59,7 @@ function Cart ({ carts, games }) {
     function handleCurrentClick(){
         setViewCurrent(!viewCurrent)
     }
+    let totalPrice = 0
 
     let currentCart = currentGames.map(game =>{ 
         return (
@@ -66,6 +67,10 @@ function Cart ({ carts, games }) {
               <strong>  Game: {game.name}</strong> Price:  
                 ${game.price} per week
                 <br></br>
+                Duration: {game.rentals[0].duration} weeks
+                <br></br>
+
+           Total Price of your cart: $ {totalPrice += (game.price * game.rentals[0].duration)}
             </>
         )})
 
@@ -91,7 +96,8 @@ let pastCart = pastGames.map(game => {
         <div>
             <button onClick={(handleCurrentClick)}>Show my current cart</button>
             <div>
-                { viewCurrent ? currentCart : null}
+                { viewCurrent ? currentCart 
+                : null}
             </div>
                       
             <br></br>

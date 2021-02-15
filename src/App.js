@@ -27,6 +27,9 @@ function App() {
   const[carts, setCarts] = useState([])
   const[user, setUser] = useState([])
   const[rentals, setRentals] = useState([])
+  const[wallet, setWallet] = useState(100)
+  const[walletValue, setWalletValue] = useState(0)
+
 
   useEffect(() => {
     fetch('http://localhost:4000/games')
@@ -98,13 +101,28 @@ function deleteReview(deleted) {
   setReviews(deletedReviewsArray)
 }
 
-const me = user[0]
+function handleWallet(e) {
+  e.preventDefault() 
+  setWallet(walletValue)
+
+}
+
+//const me = user[0]
 //console.log(me)
 
 return (
     <div className="App">
       
-      <p>Current wallet: ${me ? me.wallet : null }</p>
+      <p>Current wallet: ${wallet}</p>
+      <form onSubmit={handleWallet}>
+        <label htmlFor="wallet"> Set Current Wallet </label>
+        <input type = "number" value={walletValue} onChange={(e) => setWalletValue(e.target.value)}
+        />
+        <button type="submit">Set!</button>
+      </form>
+      <br></br> 
+      <br></br>
+
       <NavBar />
       <br></br>
       <br></br>
