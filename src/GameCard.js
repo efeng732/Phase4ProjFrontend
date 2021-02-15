@@ -1,5 +1,7 @@
 import Review from "./Review.js"
 import {useState} from "react";
+import { Link } from "react-router-dom"
+import GameShow from "./GameShow"
 
 function GameCard({ game, review }) {
 
@@ -17,6 +19,8 @@ function GameCard({ game, review }) {
            <h2> {name} </h2>
            <img src = {image} alt = {name} height="200px" width="150px"/>
            <br></br>
+            <Link to={`/gamepage/${id}`}>Rent this game</Link>
+            <br></br>
            <button onClick={handleShowDetails}>View more details</button>
         {  showDetails ?   
            (<ul>
@@ -27,7 +31,7 @@ function GameCard({ game, review }) {
            </ul> ) : null
                 }           
 
-           <Review review={review}/>
+           {/* <Review review={review}/> */}
          </div>
     )
 }
