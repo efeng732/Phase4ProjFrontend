@@ -6,7 +6,7 @@ function Cart ({ carts, games }) {
     const[viewPast, setViewPast] = useState(false)
 
     const currentCartIds = []
-     carts.map((cart) => {
+    carts.map((cart) => {
         if(cart.current == true ) 
         {
             currentCartIds.push(cart.id)
@@ -20,7 +20,8 @@ function Cart ({ carts, games }) {
             pastCartIds.push(cart.id)
         }
     })
-// noob hardcoded function for now lol 
+
+    // noob hardcoded function for now lol 
     let currentGames = [] 
     function showCurrent () {
         games.map((game) => {
@@ -35,7 +36,6 @@ function Cart ({ carts, games }) {
 
     }
     showCurrent()
-    //console.log(currentGames)
 
     let pastGames = []
     function showPast() {
@@ -54,7 +54,6 @@ function Cart ({ carts, games }) {
         
     }
     showPast()
-    //console.log(pastGames)
 
     function handleCurrentClick(){
         setViewCurrent(!viewCurrent)
@@ -63,49 +62,46 @@ function Cart ({ carts, games }) {
 
     let currentCart = currentGames.map(game =>{ 
         return (
-            <>
-              <strong>  Game: {game.name}</strong> Price:  
-                ${game.price} per week
-                <br></br>
-                Duration: {game.rentals[0].duration} weeks
-                <br></br>
-
-           Total Price of your cart: $ {totalPrice += (game.price * game.rentals[0].duration)}
-            </>
+            <div>
+                <>
+                    <strong>  Game: {game.name}</strong> Price: ${game.price} per week
+                    <br></br>
+                    Duration: {game.rentals[0].duration} weeks
+                    <br></br>
+                </>
+                <p>Total Price of your cart: $ {totalPrice += (game.price * game.rentals[0].duration)}</p>
+            </div>
         )})
 
     function handlePastClick(){
         setViewPast(!viewPast)
     }
 
-let pastCart = pastGames.map(game => {
-    return (
-        <>
-            <strong> Game: {game.name}</strong> Rental Fee:
-            
-            ${game.price * game.rentals[0].duration} Cart Number : 
-            
-            {game.cartnumber} <br></br>
-        </>
-    )
-})
-
-
+    let pastCart = pastGames.map(game => {
+        return (
+            <>
+                <strong> Game: {game.name}</strong>
+                <p>Rental Fee: ${game.price * game.rentals[0].duration}</p>
+                <p>Cart Number: {game.cartnumber}</p> <br></br>
+            </>
+        )
+    })
 
     return(
         <div>
             <button onClick={(handleCurrentClick)}>Show my current cart</button>
             <div>
-                { viewCurrent ? currentCart 
-                : null}
-            </div>
-                      
+                { viewCurrent ? 
+                    currentCart : null
+                }
+            </div> 
             <br></br>
-
             <button onClick={handlePastClick}>Show my past carts</button> 
             <br></br>
             <div>
-                {viewPast ? pastCart : null}
+                { viewPast ? 
+                    pastCart : null
+                }
             </div>
         </div>
     )

@@ -53,83 +53,83 @@ function App() {
     fetch('http://localhost:4000/carts')
     .then(res => res.json())
     .then(data => setCarts(data))
-}, [])
+  }, [])
 
-useEffect(() => {
-  fetch('http://localhost:4000/users')
-  .then(res => res.json())
-  .then(setUser
-  )
-}, [])
+  useEffect(() => {
+    fetch('http://localhost:4000/users')
+    .then(res => res.json())
+    .then(setUser
+    )
+  }, [])
 
-useEffect(() => {
-  fetch(`http://localhost:4000/rentals`)
-  .then( res => res.json())
-  .then(data => setRentals(data))
-}, [])
+  useEffect(() => {
+    fetch(`http://localhost:4000/rentals`)
+    .then( res => res.json())
+    .then(data => setRentals(data))
+  }, [])  
 
   const gamesToDisplay = games.filter((game) => {
     return ( genre.length == 0 ? 
-  game.name.toLowerCase().includes(search.toLowerCase()) : 
-  (game.name.toLowerCase().includes(search.toLowerCase()) && game.genre == genre)
-  )
-})
+      game.name.toLowerCase().includes(search.toLowerCase()) : 
+      (game.name.toLowerCase().includes(search.toLowerCase()) && game.genre == genre)
+    )
+  })
 
 
 //Add Rental 
 
-function addRental(newRentalObj) {
-  const newRentalsArray = [newRentalObj, ...rentals]
-  setRentals(newRentalsArray)
-  setGames([...games])
+  function addRental(newRentalObj) {
+    const newRentalsArray = [...rentals, newRentalObj]
+    setRentals(newRentalsArray)
+    setGames([...games])
+  }
 
-}
+  function addReview(newReviewObj) {
+    const newReviewsArray = [newReviewObj, ...reviews]
+    setReviews(newReviewsArray)
+    return reviews
+  }
 
-function addReview(newReviewObj) {
-  const newReviewsArray = [newReviewObj, ...reviews]
-  setReviews(newReviewsArray)
-  return reviews
-}
+  function editReview(updatedReviewObj) {
+    const updatedReviewsArray = reviews.map((review) => review.id === updatedReviewObj.id? updatedReviewObj : review)
+    setReviews(updatedReviewsArray)
+  }
 
-function editReview(updatedReviewObj) {
-  const updatedReviewsArray = reviews.map((review) => review.id === updatedReviewObj.id? updatedReviewObj : review)
-  setReviews(updatedReviewsArray)
-}
+  function deleteReview(updatedReviewsArray) {
+    // const deletedReviewsArray = reviews.filter((review) => 
+    //   // filter is not working properly, returning the deleted review inside of deletedReviewsArray
+    //   // deleted is empty object, there is no idea to compare within filter function
+    //   (deleted.id !== review.id)
+    // )
+    setReviews(updatedReviewsArray)
+  }
 
-function deleteReview(deleted) {
-  const deletedReviewsArray = reviews.filter((review) => review.id !== deleted.id)
-  setReviews(deletedReviewsArray)
-}
-
-function handleWallet(e) {
-  e.preventDefault() 
-  setWallet(walletValue)
-
-}
+  function handleWallet(e) {
+    e.preventDefault() 
+    setWallet(walletValue)
+  }
 
 //const me = user[0]
 //console.log(me)
 
 return (
     <div className="App">
-      
       <p>Current wallet: ${wallet}</p>
       <form onSubmit={handleWallet}>
         <label htmlFor="wallet"> Set Current Wallet </label>
-        <input type = "number" value={walletValue} onChange={(e) => setWalletValue(e.target.value)}
+        <input 
+          type = "number" 
+          value={walletValue} 
+          onChange={(e) => setWalletValue(e.target.value)}
         />
         <button type="submit">Set!</button>
       </form>
       <br></br> 
       <br></br>
-
       <NavBar />
       <br></br>
       <br></br>
-
-      <p></p>
       <Switch>
-
         <Route exact path="/gamelist">
           <Search search={search} setSearch={setSearch} />
           <Filter games={games} genre={genre} setGenre={setGenre}/>
@@ -145,7 +145,14 @@ return (
         </Route>
 
         <Route exact path="/gamepage/:id">
-          <GameShow addRental={addRental} reviews={reviews} addReview={addReview} editReview={editReview} deleteReview={deleteReview}/>
+          <GameShow 
+            addRental={addRental} 
+            reviews={reviews} 
+            addReview={addReview} 
+            editReview={editReview} 
+            deleteReview={deleteReview} 
+            wallet={wallet}
+          />
         </Route>
 
       </Switch>
