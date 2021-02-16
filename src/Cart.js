@@ -1,98 +1,111 @@
 import {useState} from "react";
 
-function Cart ({ carts, games }) {
+function Cart ({ carts, games, rentals, setRentals, deleteRental, wallet, setWallet }) {
 
     const[viewCurrent, setViewCurrent] = useState(false)
     const[viewPast, setViewPast] = useState(false)
 
-    const currentCartIds = []
-    carts.map((cart) => {
-        if(cart.current == true ) 
-        {
-            currentCartIds.push(cart.id)
-        }
-    })
-
-    const pastCartIds = []
-    carts.map((cart) => {
-        if(cart.current == false) 
-        {
-            pastCartIds.push(cart.id)
-        }
-    })
-
-    // noob hardcoded function for now lol 
-    let currentGames = [] 
+   
+   
+    let currentRentals =[];
     function showCurrent () {
-        games.map((game) => {
-            if (game.rentals.length) {
-              for(let i =0; i<game.rentals.length; i++) {
-                  if(game.rentals[0].cart_id == 2) {
-                      currentGames.push(game)
-                  }
-              }
-            }
-        })
-
+        currentRentals = rentals.filter((rental) => rental.cart.current === true 
+        )
     }
     showCurrent()
-
-    let pastGames = []
-    function showPast() {
-        games.map((game) => {
-            if(game.rentals.length) {
-                for(let i =0; i<game.rentals.length; i++) {
-                    if(game.rentals[0].cart_id == 1 ) {
-                        pastGames.push({...game, cartnumber: 1})
-                    }
-                    else if(game.rentals[0].cart_id == 3) {
-                        pastGames.push({...game, cartnumber: 3})
-                    }
-                }
-            }
-        })
-        
-    }
-    showPast()
-
+    
+    
+    let totalPrice = 0
+    currentRentals.map( rental => totalPrice += (rental.game.price * rental.duration))
+    
     function handleCurrentClick(){
         setViewCurrent(!viewCurrent)
+        // setCurrentCart()
     }
-    let totalPrice = 0
 
-    let currentCart = currentGames.map(game =>{ 
-        return (
-            <div>
-                <>
-                    <strong>  Game: {game.name}</strong> Price: ${game.price} per week
-                    <br></br>
-                    Duration: {game.rentals[0].duration} weeks
-                    <br></br>
-                </>
-                <p>Total Price of your cart: $ {totalPrice += (game.price * game.rentals[0].duration)}</p>
-            </div>
-        )})
+    let currentCart; 
+    function setCurrentCart() {
+        currentCart = currentRentals.map(rental =>{ 
+            return (
+                <div>
+                    <>
+                        <strong>  Game: {rental.game.name}</strong> Price: ${rental.game.price} per week
+                        <br></br>
+                        Duration: {rental.duration} weeks
+                        <br></br>
+                        <button onClick={deleteItem} value={rental.game.id}>Remove from cart</button>
+                        <br></br>
+                    </>
+                </div>  
+            )
+        })
+    }
+    
+    setCurrentCart()
+    
+    function deleteItem(e) {
+        let targetItem = rentals.filter((r) => r.game_id == e.target.value)
+        
+        const updatedRentals = rentals.filter((r) => r.id !== targetItem[0].id)
 
+        fetch(`http://localhost:4000/rentals/${targetItem[0].id}`, {
+            method: "DELETE"
+        })
+        deleteRental(updatedRentals)
+    }
+    
     function handlePastClick(){
         setViewPast(!viewPast)
     }
 
-    let pastCart = pastGames.map(game => {
+    let pastRentals = [];
+
+    showPast()
+    function showPast() {
+       pastRentals = rentals.filter((rental) => rental.cart.current === false)
+    }
+
+    let pastCart = pastRentals.map(rental => {
         return (
             <>
-                <strong> Game: {game.name}</strong>
-                <p>Rental Fee: ${game.price * game.rentals[0].duration}</p>
-                <p>Cart Number: {game.cartnumber}</p> <br></br>
+                <strong> Game: {rental.game.name}</strong>
+                <p>Rental Fee: ${rental.game.price * rental.duration}</p>
+                <p>Cart Number: {rental.cart.id}</p> <br></br>
             </>
         )
     })
+
+    function handleCheckout() {
+        //console.log(totalPrice)
+        if (wallet < totalPrice) {
+            alert("You need more money in your wallet, or you can remove a rental from your cart!")
+        } else {
+            setWallet(wallet - totalPrice)
+            alert("Success!!! Good luck gaming! ;)")
+
+            const updatedRentals = rentals.map((rental) => {
+                return {...rental, cart: {current: false}}
+            })
+
+            setRentals(updatedRentals)
+
+        }
+    }
 
     return(
         <div>
             <button onClick={(handleCurrentClick)}>Show my current cart</button>
             <div>
                 { viewCurrent ? 
-                    currentCart : null
+                <div> 
+                    <>
+                    {currentCart}
+                    <br></br>
+                    <em>Total price of your cart:</em> ${totalPrice}
+                    <button onClick={handleCheckout}>Check out</button>
+                    </>
+                </div>
+                    : null
                 }
             </div> 
             <br></br>

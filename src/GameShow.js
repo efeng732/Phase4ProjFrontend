@@ -37,12 +37,7 @@ function GameShow({
 
     function handleRentGame(e){
         e.preventDefault()
-        if(duration * game.price > wallet) {
-            alert(
-                "too expensive!"
-            )
-        }
-        else {
+    
             const newRental = {
                 duration: parseInt(duration), 
                 cart_id: 2, 
@@ -60,7 +55,8 @@ function GameShow({
             .then(newRentalObj => {
                 addRental(newRentalObj)
             }) 
-        }
+            alert("Game rental added to cart successfully! Check your current cart")
+    
     }
 
     // const gameReviews = reviews.filter(review => 
@@ -126,13 +122,6 @@ function GameShow({
         fetch(`http://localhost:4000/reviews/${myReviews[0].id}`, {
             method: "DELETE"
         })
-        // no need for return object here -> 
-        // 1. we can get updated array by filtering through reviews array before sending delete request
-        // 2. then pass updated reviews to app through deleteReview function, to set reviews state variable there
-        // .then( res => res.json())
-        // .then(deleted => {
-        //     deleteReview(deleted)
-        // })
         deleteReview(updatedReviewsArray)
     }
 
