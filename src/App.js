@@ -1,6 +1,7 @@
 //import logo from './logo.svg';
 import './App.css';
-import { Route, Switch } from "react-router-dom"
+import { Route, Switch } from "react-router-dom";
+import styled from "styled-components";
 //data
 // import users from './data/user_data.js'
 // import games from './data/game_data.js'
@@ -114,20 +115,23 @@ function App() {
 
 return (
     <div className="App">
-      <p>Current wallet: ${wallet}</p>
-      <form onSubmit={handleWallet}>
-        <label htmlFor="wallet"> Set Current Wallet </label>
-        <input 
-          type = "number" 
-          value={walletValue} 
-          onChange={(e) => setWalletValue(e.target.value)}
-        />
-        <button type="submit">Set!</button>
-      </form>
-      <br></br> 
       <br></br>
       <NavBar />
       <br></br>
+      <br></br>
+      <WalletWrapper>
+        <p>Current wallet: ${wallet}</p>
+        <form onSubmit={handleWallet}>
+          <label htmlFor="wallet"> Set Current Wallet </label>
+          <input 
+            type = "number" 
+            value={walletValue} 
+            onChange={(e) => setWalletValue(e.target.value)}
+          />
+          <button type="submit">Set!</button>
+        </form>
+      </WalletWrapper>
+      <br></br> 
       <br></br>
       <Switch>
         <Route exact path="/gamelist">
@@ -173,5 +177,13 @@ return (
     </div>
   );
 }
+
+const WalletWrapper = styled.div`
+  background-color: gray;
+  border: solid;
+  border-radius: 10px;
+  padding: 5px;
+  display: inline-block;
+`;
 
 export default App;

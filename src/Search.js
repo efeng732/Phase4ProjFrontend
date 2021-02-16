@@ -1,3 +1,5 @@
+import styled from "styled-components"
+
 function Search({ search, setSearch,  }) {
 
    function handleSearch(e) {
@@ -6,11 +8,21 @@ function Search({ search, setSearch,  }) {
    }
 
    return (
-      <div>
+      <Wrapper>
          Search:
          <input className ="searchbar" value={search} onChange={handleSearch}/>
-      </div>
+      </Wrapper>
    )
 }
+
+const Wrapper = styled.div`
+   background-color: cyan;
+   border: solid;
+   border-color: magenta;
+   border-radius: 10px;
+   display: inline-block;
+   padding: 10px;
+   margin-bottom: 10px;
+`
 
 export default Search
