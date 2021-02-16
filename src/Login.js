@@ -5,14 +5,35 @@ function Login({ history, setUser, user }) {
    const[username, setUsername] = useState("")
    const[password, setPassword] = useState("")
 
+  
+
    function handleLogin(e) {
       e.preventDefault()
-    if(username == "EnriqueKim" && password == "123"){
-        alert("You're logged in! Press home to see list of games!")
-    }
-    else {
-        alert("Wrong username and password combination, try again scrub")
-    }
+      const loggedInUser = {
+         username: username, 
+         password: password, 
+         bio: "I hate students", 
+         wallet: 100
+      }
+
+      fetch(`http://localhost:4000/login` , {
+         method: "POST", 
+         headers: {"Content-Type": "application/json" }, 
+         body: JSON.stringify(loggedInUser)
+
+      })
+      .then( (res) => res.json())
+      .then(data => {
+         setUser(data)
+         history.push(`/gamelist`)
+      })
+   //  if(username == "EnriqueKim" && password == "123"){
+   //      alert("You're logged in! Press home to see list of games!")
+        
+   //  }
+   //  else {
+   //      alert("Wrong username and password combination, try again scrub")
+   //  }
 
       setUsername("")
       setPassword("")

@@ -1,6 +1,6 @@
 //import logo from './logo.svg';
 import './App.css';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import styled from "styled-components";
 //components
 import Search from './Search.js'
@@ -15,6 +15,7 @@ import {useState, useEffect} from "react"
 
 
 function App(props) {
+  
   
 
   const[search, setSearch] = useState ("")
@@ -53,7 +54,7 @@ function App(props) {
   }, [])
 
   useEffect(() => {
-    fetch('http://localhost:4000/users')
+    fetch('http://localhost:4000/me')
     .then(res => res.json())
     .then(data => setUser(data))
   }, [])
@@ -174,4 +175,5 @@ const WalletWrapper = styled.div`
   display: inline-block;
 `;
 
-export default App;
+export default withRouter(App);
+
