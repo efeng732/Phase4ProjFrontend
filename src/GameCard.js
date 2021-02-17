@@ -24,12 +24,12 @@ function GameCard({ game, review }) {
             <br></br>
            <button onClick={handleShowDetails}>View more details</button>
         {  showDetails ?   
-           (<ul>
-            <li><strong>Price:</strong> ${price} per week</li>
-            <li><strong>System(s):</strong> {system}</li>
-            <li><strong>Genre:</strong> {genre}</li>
-            <li><strong>Rating:</strong> {rating}/100</li>
-           </ul> ) : null
+           (<DetailsList>
+                <DetailItems><strong>Price:</strong> ${price} per week</DetailItems>
+                <DetailItems><strong>System(s):</strong> {system}</DetailItems>
+                <DetailItems><strong>Genre:</strong> {genre}</DetailItems>
+                <DetailItems><strong>Rating:</strong> {rating}/100</DetailItems>
+           </DetailsList> ) : null
                 }           
 
            {/* <Review review={review}/> */}
@@ -42,18 +42,24 @@ export default GameCard;
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    text-align: center;
-    height: 280px;
+    height: 400px;
     width: 250px;
-    overflow: scroll;
-    border-style: outset;
-    border-color: red;
-    background-image: linear-gradient(white, red);
-    padding: 15px;
-    margin: 20px;
+    text-align: center;
+    margin: 30px;
+`
+
+const DetailsList = styled.ul`
+    list-style-type: none;
+    color: white;
+`
+
+const DetailItems = styled.li`
+    margin: 5px;
 `
 
 const GameImage = styled.img`
    height: 200px;
    width: 150px;
+   margin: auto;
+   width: 70%;
 `

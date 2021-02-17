@@ -4,7 +4,7 @@ const linkStyles = {
     width: "100px",
     padding: "12px",
     margin: "0 6px 6px",
-    background: "red",
+    background: '#2D68C4',
     textDecoration: "none",
     color: "white",
 }
@@ -20,7 +20,7 @@ function NavBar ({user}) {
                 exact
                 style={linkStyles}
                 activeStyle={{
-                    background: "black"
+                    background: "#F2A900"
                 }}
             >
                 Home
@@ -30,7 +30,7 @@ function NavBar ({user}) {
                 exact
                 style={linkStyles}
                 activeStyle={{
-                    background: "black"
+                    background: "#F2A900"
                 }}
             >
                Leave a review!
@@ -40,7 +40,7 @@ function NavBar ({user}) {
                 exact
                 style={linkStyles}
                 activeStyle={{
-                    background: "black"
+                    background: "#F2A900"
                 }}
             >
                 View Carts

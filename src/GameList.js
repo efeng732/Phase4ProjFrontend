@@ -43,8 +43,6 @@ export default GameList;
 
 
 const Wrapper = styled.div`
-    height: 100 vh;
-    width: 100 vw;
     display: flex;
     flex-wrap: wrap;
     padding: 20px;

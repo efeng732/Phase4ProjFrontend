@@ -174,22 +174,29 @@ return (
 
 const Wrapper = styled.div`
   text-align: center;
-  background-color: gray;
-`;
-
-const Logo = styled.h1`
-  display: inline-block;
-  float: left;
+  background-color: #3284BF;
 `
 
+// UCLA blue -> #2D68C4
+const Logo = styled.div`
+  color: #F2A900;
+  font-size: 30px;
+  text-shadow: 3px 3px black;
+  margin-bottom: 15px;
+`
+
+// Powder blue -> #0073cf
+// UCLA Gold -> #F2A900
 const WalletWrapper = styled.div`
-  background: gray;
-  border: solid;
-  border-radius: 10px;
-  padding: 5px;
+  color: white;
+  border-color: #F2A900;
+  border-style: outset;
+  border-radius: 20px;
+  background-image: linear-gradient(180deg, #2D68C4, #0073cf);
   display: inline-block;
   text-align: center;
-`;
+  padding: 15px;
+`
 
 export default withRouter(App);
 

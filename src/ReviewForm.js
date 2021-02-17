@@ -12,7 +12,7 @@ function ReviewForm() {
             </form>
          </div>
 
-         {/* <div className="editReview">
+         {<div className="editReview">
             <h3>Edit your review</h3>
          <form>
                <label htmlFor="title">
@@ -21,10 +21,12 @@ function ReviewForm() {
                </label>
             </form>
 
-         </div> */}
+         </div>}
          
       </div>
    )
 }
+
+// background color needs to display on entire page
 
 export default ReviewForm
