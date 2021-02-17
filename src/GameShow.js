@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import React, {useEffect, useState} from 'react'
 import Review from "./Review"
+import styled from 'styled-components'
 
 function GameShow({ 
     addRental, 
@@ -127,24 +128,27 @@ function GameShow({
 
  //if (!isLoaded) return <h2>Loading...</h2>   ;
     return (
-        <div>
+        <Wrapper>
+            <RentalWrap>
             {game ? 
-                <div>
-                <h2>{game.name}</h2>
-                <img src={game.image} alt={game.name} />
-                <ul>
-                    <li>Price per week: {game.price}</li> 
-                    <li>System(s): {game.system}</li> 
-                    <li>Genre: {game.genre}</li> 
-                    <li>Rating: {game.rating}/100</li> 
-                </ul> 
-                </div> 
+                <>
+                <GameTitle>{game.name}</GameTitle>
+                <GameImage src={game.image} alt={game.name} />
+                
+                <GameUl>
+                    <GameLi>Price per week: {game.price}</GameLi> 
+                    <GameLi>System(s): {game.system}</GameLi> 
+                    <GameLi>Genre: {game.genre}</GameLi> 
+                    <GameLi>Rating: {game.rating}/100</GameLi> 
+                </GameUl> 
+                </>
+                
                 : "...loading"
             }
 
                 <form onSubmit={handleRentGame} className="form">
-                    <h3>Rent this game!</h3>
-                    <label htmlFor="duration">Duration(# of weeks)</label>
+                    <RentThisGame>Rent this game! PLEASE WE'RE BROKE</RentThisGame>
+                    <label htmlFor="duration"><strong>Duration(# of weeks)</strong></label>
                     <input 
                         type="number" 
                         name="duration" 
@@ -152,14 +156,16 @@ function GameShow({
                         value={duration}
                         onChange={(e) => setDuration(e.target.value)}
                     /> 
+                    <br></br>
                 <button type="submit"> Rent!</button>
                 </form>
-
+                </RentalWrap>
+                
                 {myReviews.length > 0 ? 
                 <div>
                     <form onSubmit={handleEditReview}>
-                        <h3>Edit your review</h3>
-                        <label htmlFor="title">Title</label>
+                        <RentThisGame>Edit your review</RentThisGame>
+                        <label htmlFor="title"><strong>Title: </strong></label>
                         <input 
                             type="text" 
                             name="title" 
@@ -167,8 +173,9 @@ function GameShow({
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
+            
                         <br></br>
-                        <label htmlFor="content">Review</label>
+                        <label htmlFor="content"><strong>Review: </strong></label>
                         <input 
                             type="text" 
                             name="review" 
@@ -177,8 +184,9 @@ function GameShow({
                             onChange={(e) => setContent(e.target.value)}
                         />
                         <br></br>
-                        <label htmlFor="idNum">ID field</label>
+                        <label htmlFor="idNum"><strong>ID field: </strong></label>
                         <input type="number" name="idNum" value={idNum} onChange={(e) => setIdNum(e.target.value)}/>
+                        <br></br>
                         <button type="submit">Submit Review</button>
                     </form>
                     <br></br>
@@ -186,8 +194,8 @@ function GameShow({
                 </div>
                 : 
                 <form onSubmit={handleReview}>
-                    <h3>Review this game!</h3>
-                    <label htmlFor="title">Title</label>
+                    <RentThisGame>Review this game!</RentThisGame>
+                    <label htmlFor="title"><strong>Title: </strong></label>
                     <input 
                         type="text" 
                         name="title" 
@@ -196,7 +204,7 @@ function GameShow({
                         onChange={(e) => setTitle(e.target.value)}
                     />
                     <br></br>
-                    <label htmlFor="content">Review</label>
+                    <label htmlFor="content"><strong>Review: </strong></label>
                     <input 
                         type="text" 
                         name="review" 
@@ -212,8 +220,59 @@ function GameShow({
                 <ul>
                 <Review review={myReviews}/> 
                 </ul>
-        </div>
+        </Wrapper>
     )
 }
 
 export default GameShow 
+
+
+const Wrapper = styled.div`
+    color: white;
+    padding-bottom: 20px;
+    margin: auto;
+    width: 70%
+`
+
+const GameTitle = styled.h2`
+    font-size: 45px;
+    color: ivory;
+    text-shadow: -1px -1px 11px cyan;
+    font-family: Copperplate;
+`
+
+const GameImage = styled.img`
+    height: 400px;
+    width: 295px;
+`
+
+const GameUl = styled.ul`
+    list-style-type: none;
+    margin: auto;
+    width: 50%;
+`
+
+const GameLi = styled.li`
+    color: ivory;
+    text-shadow: -1px -1px 11px cyan;
+    font-family: Copperplate;
+    font-weight: bold;
+    font-size: 30px;
+`
+
+const RentThisGame = styled.h3`
+    color: ivory;
+    text-shadow: -1px -1px 15px deeppink;
+    font-family: Copperplate;
+    font-size: 72px;
+`
+
+const RentalWrap = styled.div`
+    border-radius: 25px;
+    background-color: #ffffff44;
+    padding-bottom: 15px;
+    margin: auto;
+    width: 70%;
+    margin-top: 25px;
+`
+

@@ -1,10 +1,12 @@
+import styled from 'styled-components'
+
 function Review ({ review }) {
     //console.log(review)
 
 
     return (
-        <div>
-            <h2>Reviews</h2>
+        <Wrapper>
+            <ReviewHeader>Reviews</ReviewHeader>
             {review.length > 0 ? 
             <>
             <h3>{review[0].title}</h3>
@@ -14,8 +16,23 @@ function Review ({ review }) {
             </>
             : "No Reviews have been left for this game" 
             }
-        </div>
+        </Wrapper>
     )
 }
 
 export default Review; 
+
+const Wrapper = styled.div`
+    margin: auto;
+    width: 95%;
+    padding-top: 23px;
+    color: ivory;
+    text-shadow: -1px -1px 11px cyan;
+    font-family: Copperplate;
+    font-size: 24px;
+`
+
+const ReviewHeader = styled.h2`
+    font-size: 55px;
+`
+

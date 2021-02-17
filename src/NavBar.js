@@ -25,7 +25,7 @@ function NavBar ({user}) {
             >
                 Home
             </NavLink>
-            <NavLink
+            {/* <NavLink
                 to="/reviewform"
                 exact
                 style={linkStyles}
@@ -34,7 +34,7 @@ function NavBar ({user}) {
                 }}
             >
                Leave a review!
-            </NavLink>
+            </NavLink> */}
             <NavLink
                 to="/carts"
                 exact
@@ -44,6 +44,16 @@ function NavBar ({user}) {
                 }}
             >
                 View Carts
+            </NavLink>
+            <NavLink
+                to="/"
+                exact
+                style={linkStyles}
+                activeStyle={{
+                    background: "#F2A900"
+                }}
+            >
+                Logout
             </NavLink>
         </div>
     )

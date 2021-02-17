@@ -11,6 +11,7 @@ import ReviewForm from './ReviewForm.js'
 import Cart from './Cart'
 import GameShow from './GameShow.js'
 import Login from './Login.js'
+import Wallet from './Wallet.js'
 import {useState, useEffect} from "react"
 
 
@@ -25,6 +26,7 @@ function App(props) {
   const[rentals, setRentals] = useState([])
   const[wallet, setWallet] = useState(100)
   const[walletValue, setWalletValue] = useState(0)
+  
 
 
   useEffect(() => {
@@ -98,10 +100,7 @@ function App(props) {
     setRentals(updatedRentals)
   }
   
-  function handleWallet(e) {
-    e.preventDefault() 
-    setWallet(walletValue)
-  }
+ 
 
 return (
     <Wrapper>
@@ -110,18 +109,6 @@ return (
       <NavBar />
       <br></br>
       <br></br>
-      <WalletWrapper>
-        <p>Current wallet: ${wallet}</p>
-        <form onSubmit={handleWallet}>
-          <label htmlFor="wallet"> Set Current Wallet </label>
-          <input 
-            type = "number" 
-            value={walletValue} 
-            onChange={(e) => setWalletValue(e.target.value)}
-          />
-          <button type="submit">Set!</button>
-        </form>
-      </WalletWrapper>
       <br></br> 
       <br></br>
       <Switch>
@@ -130,6 +117,9 @@ return (
         </Route>
 
         <Route exact path="/gamelist">
+          <Wallet wallet={wallet} setWallet={setWallet} walletValue={walletValue} setWalletValue={setWalletValue} />
+          <br></br>
+          <br></br>
           <Search search={search} setSearch={setSearch} />
           <Filter games={games} genre={genre} setGenre={setGenre}/>
           <GameList games={gamesToDisplay}  />
@@ -140,6 +130,12 @@ return (
         </Route>
 
         <Route exact path="/carts">
+          <Wallet 
+            wallet={wallet} 
+            setWallet={setWallet} 
+            walletValue={walletValue} 
+            setWalletValue={setWalletValue}
+          />
           <Cart 
             carts={carts} 
             games={games} 
@@ -152,6 +148,12 @@ return (
         </Route>
 
         <Route exact path="/gamepage/:id">
+          <Wallet 
+            wallet={wallet} 
+            setWallet={setWallet} 
+            walletValue={walletValue} 
+            setWalletValue={setWalletValue}
+          /> 
           <GameShow 
             addRental={addRental} 
             reviews={reviews} 
@@ -174,29 +176,24 @@ return (
 
 const Wrapper = styled.div`
   text-align: center;
-  background-color: #3284BF;
+  background-image: url("https://bashooka.com/wp-content/uploads/2018/04/scg-canvas-background-animation-22.jpg");
+  
 `
 
 // UCLA blue -> #2D68C4
 const Logo = styled.div`
-  color: #F2A900;
-  font-size: 30px;
-  text-shadow: 3px 3px black;
+  color: magenta;
+  font-size: 90px;
+  text-shadow: -15px 5px 17px #00ffa6;
   margin-bottom: 15px;
+  font-family: Copperplate;
 `
+
+
 
 // Powder blue -> #0073cf
 // UCLA Gold -> #F2A900
-const WalletWrapper = styled.div`
-  color: white;
-  border-color: #F2A900;
-  border-style: outset;
-  border-radius: 20px;
-  background-image: linear-gradient(180deg, #2D68C4, #0073cf);
-  display: inline-block;
-  text-align: center;
-  padding: 15px;
-`
+
 
 export default withRouter(App);
 

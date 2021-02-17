@@ -1,9 +1,11 @@
 import {useState} from "react";
+import styled from 'styled-components'
 
 function Cart ({ carts, games, rentals, setRentals, deleteRental, wallet, setWallet }) {
 
     const[viewCurrent, setViewCurrent] = useState(false)
     const[viewPast, setViewPast] = useState(false)
+    const[scammed, setScammed] = useState(false)
 
    
    
@@ -27,16 +29,21 @@ function Cart ({ carts, games, rentals, setRentals, deleteRental, wallet, setWal
     function setCurrentCart() {
         currentCart = currentRentals.map(rental =>{ 
             return (
-                <div>
+                <CartItem>
                     <>
-                        <strong>  Game: {rental.game.name}</strong> Price: ${rental.game.price} per week
+                        <strong>  Game: {rental.game.name}</strong> 
+                        <br></br>
+                        <br></br>
+                        Price: ${rental.game.price} per week
                         <br></br>
                         Duration: {rental.duration} weeks
                         <br></br>
+                        <br></br>
                         <button onClick={deleteItem} value={rental.game.id}>Remove from cart</button>
                         <br></br>
+                        <br></br>
                     </>
-                </div>  
+                </CartItem>  
             )
         })
     }
@@ -67,11 +74,13 @@ function Cart ({ carts, games, rentals, setRentals, deleteRental, wallet, setWal
 
     let pastCart = pastRentals.map(rental => {
         return (
+            <PastCartItem>
             <>
                 <strong> Game: {rental.game.name}</strong>
                 <p>Rental Fee: ${rental.game.price * rental.duration}</p>
                 <p>Cart Number: {rental.cart.id}</p> <br></br>
             </>
+            </PastCartItem>
         )
     })
 
@@ -82,6 +91,7 @@ function Cart ({ carts, games, rentals, setRentals, deleteRental, wallet, setWal
         } else {
             setWallet(wallet - totalPrice)
             alert("Success!!! Good luck gaming! ;)")
+            setScammed(true)
 
             const updatedRentals = rentals.map((rental) => {
                 return {...rental, cart: {current: false}}
@@ -93,31 +103,91 @@ function Cart ({ carts, games, rentals, setRentals, deleteRental, wallet, setWal
     }
 
     return(
-        <div>
-            <button onClick={(handleCurrentClick)}>Show my current cart</button>
-            <div>
+        <Wrapper>
+            <CurrentCartBtn onClick={(handleCurrentClick)}>Show my current cart</CurrentCartBtn>
+            <CurrentCart>
                 { viewCurrent ? 
                 <div> 
                     <>
                     {currentCart}
                     <br></br>
+                    <h2>
                     <em>Total price of your cart:</em> ${totalPrice}
+                    </h2>
+                    <br></br>
                     <button onClick={handleCheckout}>Check out</button>
                     </>
                 </div>
                     : null
                 }
-            </div> 
+            </CurrentCart> 
             <br></br>
-            <button onClick={handlePastClick}>Show my past carts</button> 
+            <PastCartBtn onClick={handlePastClick}>Show my past carts</PastCartBtn> 
             <br></br>
-            <div>
+            <PastCart>
                 { viewPast ? 
                     pastCart : null
                 }
-            </div>
-        </div>
+            </PastCart>
+            {scammed ? <img src="https://i.imgflip.com/1kdb7h.jpg" alt="Sucker!!!!"/> :null }
+        </Wrapper>
     )
 }
 
 export default Cart; 
+
+const Wrapper = styled.div`
+    padding-bottom: 400px;
+    color: white;
+`
+
+
+
+const CurrentCartBtn = styled.button`
+    margin-top: 50px;
+    margin-bottom: 20px;
+`
+
+const CurrentCart = styled.div`
+    border-bottom: 15px double red;
+    padding-bottom: 15px;
+`
+
+const CartItem = styled.div`
+    margin: auto;
+    width: 40%;
+    margin-bottom: 10px;
+    border: ridge;
+    border-radius: 15px;
+    background-color: #ffffff44;
+    padding-top: 10px;
+    border-color: yellow; 
+    text-shadow: -1px -1px 15px seagreen;
+    color: ivory;
+    font-family: Copperplate;
+    font-size: 20px;
+`
+
+const PastCartItem = styled.div` 
+    margin: auto;
+    width: 40%;
+    margin-bottom: 10px;
+    border: ridge;
+    border-radius: 15px;
+    background-color: #ffffff44;
+    padding-top: 10px;
+    border-color: cyan; 
+    text-shadow: -1px -1px 15px seagreen;
+    color: ivory;
+    font-family: Copperplate;
+    font-size: 20px;
+
+`
+const PastCartBtn = styled.button`
+    margin-bottom: 20px;
+`
+
+const PastCart = styled.div`
+    margin-bottom: 100px;
+`
+
