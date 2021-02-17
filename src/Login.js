@@ -58,7 +58,7 @@ function Login({ history, setUser, user }) {
                <FormLabel htmlFor="password">Password:</FormLabel>
                <br></br>
                <input 
-                  type="text" 
+                  type="password" 
                   name="password" 
                   value={password}
                   onChange={ (e) => setPassword(e.target.value)}
