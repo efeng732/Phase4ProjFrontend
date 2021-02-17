@@ -15,8 +15,6 @@ import {useState, useEffect} from "react"
 
 
 function App(props) {
-  
-  
 
   const[search, setSearch] = useState ("")
   const[genre, setGenre] = useState("")
@@ -106,7 +104,8 @@ function App(props) {
   }
 
 return (
-    <div className="App">
+    <Wrapper>
+      <Logo>GameBuster</Logo>
       <br></br>
       <NavBar />
       <br></br>
@@ -163,16 +162,33 @@ return (
           />
         </Route>
       </Switch>
-    </div>
+    </Wrapper>
   );
 }
 
-const WalletWrapper = styled.div`
+// dont forget the login page!!!
+// remove all existing styles and work from the top to the bottom of the component tree
+// re-do all styles starting with app
+// make sure all elements are lined up as desired and consistent where necessary
+// remeber that certain styles may be passed down to children
+
+const Wrapper = styled.div`
+  text-align: center;
   background-color: gray;
+`;
+
+const Logo = styled.h1`
+  display: inline-block;
+  float: left;
+`
+
+const WalletWrapper = styled.div`
+  background: gray;
   border: solid;
   border-radius: 10px;
   padding: 5px;
   display: inline-block;
+  text-align: center;
 `;
 
 export default withRouter(App);

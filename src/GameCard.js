@@ -2,6 +2,7 @@ import Review from "./Review.js"
 import {useState} from "react";
 import { Link } from "react-router-dom"
 import GameShow from "./GameShow"
+import styled from 'styled-components'
 
 function GameCard({ game, review }) {
 
@@ -15,9 +16,9 @@ function GameCard({ game, review }) {
     }
 
     return(
-        <div className="game-card">
+        <Wrapper className="game-card">
            <h2> {name} </h2>
-           <img src = {image} alt = {name} height="200px" width="150px"/>
+           <GameImage src = {image} alt = {name} />
            <br></br>
             <Link to={`/gamepage/${id}`}>Rent this game</Link>
             <br></br>
@@ -32,8 +33,27 @@ function GameCard({ game, review }) {
                 }           
 
            {/* <Review review={review}/> */}
-         </div>
+        </Wrapper>
     )
 }
 
 export default GameCard;
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 280px;
+    width: 250px;
+    overflow: scroll;
+    border-style: outset;
+    border-color: red;
+    background-image: linear-gradient(white, red);
+    padding: 15px;
+    margin: 20px;
+`
+
+const GameImage = styled.img`
+   height: 200px;
+   width: 150px;
+`

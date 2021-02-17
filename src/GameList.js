@@ -1,6 +1,7 @@
 import GameCard from "./GameCard.js"
 import Cart from "./Cart.js"
 import {useEffect, useState} from "react"
+import styled from 'styled-components'
 // import carts from './data/cart_data.js'
 // import rentals from './data/rental_data.js'
 
@@ -31,10 +32,20 @@ function GameList({ games, reviews }){
     })
     
     return(
-        <div>
+        <Wrapper>
            {gameComponents}
-        </div>
+        </Wrapper>
     )
 }
 
 export default GameList;
+
+
+
+const Wrapper = styled.div`
+    height: 100 vh;
+    width: 100 vw;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+`
